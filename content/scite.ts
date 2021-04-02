@@ -86,10 +86,10 @@ function getCellX(tree, row, col, field) {
   {
     switch (field) {
       case 'properties':
-        return ' scite-state-anot8'
+        return '' //' scite-state-anot8'
       case 'text':
         // return '<a href="http://localhost:5003">a link</a> <p onclick="this.style.color=\"red\";">thing</p>'
-        return 'a link'
+        return '-'
     }
   }
 
