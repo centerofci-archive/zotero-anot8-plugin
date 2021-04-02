@@ -62,7 +62,8 @@ const SciteItemPane = new class { // tslint:disable-line:variable-name
     let open_pdf_command = "return false;"
     if (pdf_attachment)
     {
-      open_pdf_command = `Zotero.launchURL('http://localhost:5003/r/-1.zotero/-1?relative_file_directory=storage/${pdf_attachment.key}/'); return false;`
+      const file_name = pdf_attachment.getFilename()
+      open_pdf_command = `Zotero.launchURL('http://localhost:5003/r/-1.zotero/-1?relative_file_path=storage/${pdf_attachment.key}/${file_name}'); return false;`
     }
     document.getElementById("button_open_in_anot8").setAttribute("oncommand", open_pdf_command)
   }
