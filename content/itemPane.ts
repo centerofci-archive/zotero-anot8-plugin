@@ -53,7 +53,7 @@ const SciteItemPane = new class { // tslint:disable-line:variable-name
         break
       }
     }
-    let has_pdf = pdf_attachment !== undefined
+    const has_pdf = pdf_attachment !== undefined
 
     document.getElementById("message_no_pdf_attached").style.display = has_pdf ? "none" : ""
     document.getElementById("button_open_in_anot8").style.display = has_pdf ? "" : "none"
