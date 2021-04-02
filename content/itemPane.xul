@@ -14,6 +14,15 @@
       <vbox id="zotero-editpane-scite" flex="1" style="overflow: auto">
         <description>
           <html:div id="zotero-editpane-scite-summary" xmlns:html="http://www.w3.org/1999/xhtml" type="content"/>
+
+          <vbox class="zotero-box">
+            <hbox align="center">
+              <description value= "Does not have a PDF attached to open in Anot8" id="message_no_pdf_attached"/>
+              <button id="button_open_in_anot8" label="Open in Anot8"
+                oncommand="Zotero.launchURL('http://localhost:5003'); return false;"/>
+            </hbox>
+          </vbox>
+
         </description>
       </vbox>
     </tabpanel>

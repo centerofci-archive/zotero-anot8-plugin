@@ -73,7 +73,7 @@ async function getLongDoi(shortDoi) {
 
 const itemTreeViewWaiting: Record<string, boolean> = {}
 
-const sciteItemCols = ['zotero-items-column-supporting', 'zotero-items-column-contrasting', 'zotero-items-column-mentioning']
+const sciteItemCols = ['zotero-items-column-supporting', 'zotero-items-column-contrasting', 'zotero-items-column-mentioning', 'zotero-items-column-anot8']
 function getCellX(tree, row, col, field) {
   if (sciteItemCols.indexOf(col.id) < 0) return ''
   const key = col.id.split('-').pop()
@@ -81,6 +81,17 @@ function getCellX(tree, row, col, field) {
   const item = tree.getRow(row).ref
 
   if (item.isNote() || item.isAttachment()) return ''
+
+  if (key === "anot8")
+  {
+    switch (field) {
+      case 'properties':
+        return ' scite-state-anot8'
+      case 'text':
+        // return '<a href="http://localhost:5003">a link</a> <p onclick="this.style.color=\"red\";">thing</p>'
+        return 'a link'
+    }
+  }
 
   if (Scite.ready.isPending()) { // tslint:disable-line:no-use-before-declare
     const id = `${field}.${item.id}`
@@ -107,7 +118,7 @@ function getCellX(tree, row, col, field) {
     debug(`No tallies found for ${doi}`)
   }
 
-  const value = tallies ? tallies[key].toLocaleString() : '-'
+  const value = (tallies ? tallies[key].toLocaleString() : '-')
 
   switch (field) {
     case 'text':
@@ -130,6 +141,9 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zoter
 $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field, unformatted, includeBaseMapped) {
   try {
     const colID = `zotero-items-column-${field}`
+
+    if (field === "anot8") return "field todo"
+
     if (sciteItemCols.indexOf(colID) >= 0) {
       if (Scite.ready.isPending()) return 0 // tslint:disable-line:no-use-before-declare
       const doi = getDOI(getField(this, 'DOI'), getField(this, 'extra'))

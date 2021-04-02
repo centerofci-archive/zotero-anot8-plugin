@@ -1,4 +1,4 @@
-const marker = 'SciteMonkeyPatched'
+const marker = 'Anot8MonkeyPatched'
 
 export function repatch(object, method, patcher) {
   object[method] = patcher(object[method])

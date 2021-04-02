@@ -41,31 +41,30 @@ const SciteItemPane = new class { // tslint:disable-line:variable-name
   }
 
   public async refresh() {
-    const container = document.getElementById('zotero-editpane-scite')
-    for (const hbox of Array.from(container.getElementsByTagNameNS(xul, 'hbox'))) {
-      hbox.remove()
-    }
 
-    const doi = this.item?.getField('DOI').toLowerCase()
+    const attachment_ids = this.item.getAttachments();
 
-    let summary = Zotero.Scite.getString('itemPane.noTallies')
-    const tallies = Zotero.Scite.tallies[doi]
-    if (tallies) {
-      summary = Zotero.Scite.getString('itemPane.summary', {...tallies, reportLink: `https://scite.ai/reports/${tallies.doi}` }, true)
-      summary = `<div xmlns:html="http://www.w3.org/1999/xhtml">${summary}</div>`
-      summary = summary.replace(/(<\/?)/g, '$1html:')
-
-      const html = this.dom.parser.parseFromString(summary, 'text/xml')
-      for (const a of html.getElementsByTagNameNS('http://www.w3.org/1999/xhtml', 'a')) {
-        if (!a.getAttribute('href')) continue
-
-        a.setAttribute('onclick', 'Zotero.launchURL(this.getAttribute("href")); return false;')
-        a.setAttribute('style', 'color: blue')
+    let pdf_attachment = undefined
+    for (let id of attachment_ids) {
+      const attachment = Zotero.Items.get(id);
+      if (attachment.attachmentContentType == "application/pdf")
+      {
+        pdf_attachment = attachment
+        break
       }
-      summary = this.dom.serializer.serializeToString(html)
     }
+    let has_pdf = pdf_attachment !== undefined
 
-    document.getElementById('zotero-editpane-scite-summary').innerHTML = summary
+    document.getElementById("message_no_pdf_attached").style.display = has_pdf ? "none" : ""
+    document.getElementById("button_open_in_anot8").style.display = has_pdf ? "" : "none"
+
+
+    let open_pdf_command = "return false;"
+    if (pdf_attachment)
+    {
+      open_pdf_command = `Zotero.launchURL('http://localhost:5003/r/-1.zotero/-1?relative_file_directory=storage/${pdf_attachment.key}/'); return false;`
+    }
+    document.getElementById("button_open_in_anot8").setAttribute("oncommand", open_pdf_command)
   }
 }
 

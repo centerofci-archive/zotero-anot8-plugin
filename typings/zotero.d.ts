@@ -22,6 +22,7 @@ declare global {
 
     Items: {
       async getAsync(ids: number | number[]): any | any[]
+      async get(id: number): any
     }
 
     DB: {

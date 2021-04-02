@@ -3,7 +3,7 @@
 <!DOCTYPE window SYSTEM "chrome://zotero-scite/locale/zotero-scite.dtd">
 
 <overlay id="zotero-scite-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  
+
   <menupopup id="zotero-itemmenu">
     <menuitem id="menu-scite-get-link" label="&zotero.scite.item-menu.get-link;" oncommand="Zotero.Scite.zoteroPane.run('getTalliesForDOI')"/>
     <menuitem id="menu-scite-report-link" label="&zotero.scite.item-menu.report-link;" oncommand="Zotero.Scite.zoteroPane.run('viewSciteReport')"/>
@@ -23,7 +23,7 @@
       id="zotero-items-column-contrasting"
       label="Contrasting"
       flex="1"
-      insertafter="zotero-items-column-contrasting"
+      insertafter="zotero-items-column-supporting"
       zotero-persist="width ordinal hidden sortActive sortDirection"
     />
     <splitter class="tree-splitter"/>
@@ -32,6 +32,14 @@
       label="Mentioning"
       flex="1"
       insertafter="zotero-items-column-contrasting"
+      zotero-persist="width ordinal hidden sortActive sortDirection"
+    />
+    <splitter class="tree-splitter"/>
+    <treecol
+      id="zotero-items-column-anot8"
+      label="Anot8"
+      flex="1"
+      insertafter="zotero-items-column-mentioning"
       zotero-persist="width ordinal hidden sortActive sortDirection"
     />
     <splitter class="tree-splitter"/>

@@ -35,3 +35,10 @@ button *, button:focus *
   list-style-image: url(chrome://zotero-scite/skin/loading.jpg);
   height: 10px;
 }
+
+#zotero-items-tree treechildren::-moz-tree-image(scite-state-anot8)
+{
+  margin: 1px 5px 0;
+  list-style-image: url(chrome://zotero-scite/skin/loading.jpg);
+  height: 10px;
+}
